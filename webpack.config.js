@@ -1,11 +1,12 @@
 const webpack = require("webpack");
 const process = require('process');
 const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const PUBLIC_PATH='/assets/';
-const OUTPUT_DIRECTORY = __dirname + `/public/${PUBLIC_PATH}`;
+const PUBLIC_PATH = '/assets/';
+const OUTPUT_DIRECTORY = path.join(__dirname, `/public/${PUBLIC_PATH}`);
 
 const BABEL_PRESET = {
   loader: 'babel-loader',
@@ -16,31 +17,40 @@ const BABEL_PRESET = {
 };
 
 module.exports = {
-    entry: {
-      app: "./app/client/app.js",
-      style: "./app/stylesheets/style.css"
-    },
-    output: {
-        path: OUTPUT_DIRECTORY,
-        filename: `[name].js`,
-        publicPath: PUBLIC_PATH,
-    },
-  
-    module: {
-      rules: [
-        { test: /\.jsx?$/, exclude: /node_modules/, use: BABEL_PRESET },
-        { test: /\.jsx?$/, include: /node_modules\/quintype-toddy-libs/, use: BABEL_PRESET },
-        { test: /\.(sass|css)$/, loader: ExtractTextPlugin.extract('css-loader!sass-loader') },
-        {
-          test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
-          loader: "file-loader",
-          query: {
-            context: './app/assets',
-            name: "[name].[ext]"
-          }
+  entry: {
+    app: "./app/src/app.js",
+    style: "./app/stylesheets/style.css"
+  },
+  output: {
+    path: OUTPUT_DIRECTORY,
+    filename: `[name].js`,
+    publicPath: PUBLIC_PATH,
+  },
+  resolve: {
+    modules: ['app/src', 'node_modules'],
+    extensions: [
+      '.js',
+      '.jsx',
+      '.react.js',
+    ],
+  },  
+  watch: true,
+  module: {
+    rules: [
+      { test: /\.jsx?$/, exclude: /node_modules/, use: BABEL_PRESET },
+      { test: /\.jsx?$/, include: /node_modules\/quintype-toddy-libs/, use: BABEL_PRESET },
+      { test: /\.(sass|css)$/, loader: ExtractTextPlugin.extract('css-loader!sass-loader') },
+      {
+        test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
+        loader: "file-loader",
+        query: {
+          context: './app/assets',
+          name: "[name].[ext]"
         }
-      ]
-    },
-    plugins: [new ExtractTextPlugin({ filename: "[name].css", allChunks: true })
+      }
+    ]
+  },
+  plugins: [new ExtractTextPlugin({ filename: "[name].css", allChunks: true }),
+  new UglifyJsPlugin()
   ]
 };

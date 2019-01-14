@@ -35,7 +35,11 @@ To start the Application:
 * Install the dependencies (via `yarn install` or `npm install`)
 * Compile Assets: `npm run compile`
 * Start the webserver: `npm start`
-* Visit `http://localhost:3000` to see the application
+* Visit `http://localhost:3000` to see the application.
+* If you still see the previous game interface in browser then follow the steps below:
+    1. Open browser tools.
+    2. Go to Console tab, and type in "localStorage.clear()", hit Enter.
+    3. Refresh the Browser and you should see the new Game interface
 
 If you have done the above steps correctly, you should see the below
 

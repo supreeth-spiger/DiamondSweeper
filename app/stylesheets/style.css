@@ -1,5 +1,6 @@
 .wrapper{
   text-align: center;
+  display: block;
 }
 
 
@@ -18,9 +19,27 @@
   align-items: center;
   justify-items: center;
 }
-
-.cell{
-  height: 70px;
+.cell {
+  height: 50px;
   width: 50px;
+  background-size: 50px 50px;
   cursor: pointer;
+}
+.cell.diamond {
+  background-image: url(diamond.png);
+}
+.cell.arrow-left {
+  background-image: url(arrow-left.png);
+}
+.cell.arrow-right {
+  background-image: url(arrow-right.png);
+}
+.cell.arrow-up {
+  background-image: url(arrow-up.png);
+}
+.cell.arrow-down {
+  background-image: url(arrow-down.png);
+}
+.cell.unknown {
+  background-image: url(question.png);
 }
